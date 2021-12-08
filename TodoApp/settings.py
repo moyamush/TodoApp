@@ -31,9 +31,6 @@ try:
 except ImportError:
     pass
 
-if not DEBUG:
-    import django_heroku
-    django_heroku.settings(locals())
 
 ALLOWED_HOSTS = ["moyamush-todoapp.herokuapp.com"]
 
@@ -204,3 +201,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'moyashi0324@gmail.com'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER # send_mailのfromがNoneの場合自動で入る。
 EMAIL_HOST_PASSWORD = 'xonrcjukxmsebszd'
+
+if not DEBUG:
+    import django_heroku
+    django_heroku.settings(locals())
