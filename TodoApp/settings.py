@@ -33,6 +33,7 @@ except ImportError:
 
 
 ALLOWED_HOSTS = ["moyamush-todoapp.herokuapp.com"]
+# ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
