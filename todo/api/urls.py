@@ -16,9 +16,5 @@ urlpatterns = [
     path('users/<int:pk>/', UserDetailAPIView.as_view(), name="user-detail"),
     path('users/<int:user_pk>/task/',TaskCreateAPIView.as_view(), name="user-list"),
     path('tasks/<int:pk>/', TaskDetailAPIView.as_view(), name="task-detail"),
-    path('tasks/', TaskCreateAPIView.as_view(), name="task-list"),
-
-    #追加
-    #api/authアプリケーションのURLconf読み込み
-    path('api/jwt/auth/', include('djoser.urls.jwt')),
+    path('tasks/', TaskCreateAPIView.as_view(), name="task-list")
 ]
