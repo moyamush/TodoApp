@@ -60,11 +60,16 @@ INSTALLED_APPS = [
     # vue djangoをつなぐ
     'webpack_loader',
     'todo',
+
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+
+    'corsheaders.middleware.CorsMiddleware',
+
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -75,6 +80,12 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'TodoApp.urls'
+
+CORS_ORIGIN_WHITELIST = [
+    'https://moyamush-todoapp-frontend.herokuapp.com',
+]
+# レスポンスを公開する
+CORS_ALLOW_CREDENTIALS = True
 
 TEMPLATES = [
     {
