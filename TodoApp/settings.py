@@ -30,6 +30,9 @@ try:
 except ImportError:
     pass
 
+if not DEBUG:
+    SECRET_KEY = os.environ['SECRET_KEY']
+
 
 ALLOWED_HOSTS = ["moyamush-todoapp.herokuapp.com"]
 # ALLOWED_HOSTS = ["*"]
