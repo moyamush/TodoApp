@@ -226,7 +226,6 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': False,
     #暗号のアルゴリズム設定
     'ALGORITHM': 'HS256',
-    'SIGNING_KEY': SECRET_KEY,
     'VERIFYING_KEY': None,
     'AUTH_HEADER_TYPES': ('JWT',),
     'USER_ID_FIELD': 'id',
