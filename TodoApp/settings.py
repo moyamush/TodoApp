@@ -82,8 +82,8 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'TodoApp.urls'
 
 CORS_ORIGIN_WHITELIST = [
-    'https://moyamush-todoapp-frontend.herokuapp.com',
-    'https://moyamush-todoapp-frontend.herokuapp.com/'
+    'https://moyamush-todoapp-frontend.herokuapp.com:5050',
+    'https://moyamush-todoapp-frontend.herokuapp.com:5050/'
 ]
 # レスポンスを公開する
 CORS_ALLOW_CREDENTIALS = True
