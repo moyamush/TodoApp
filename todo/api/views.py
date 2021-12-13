@@ -14,9 +14,9 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
 )
 
-#追加
-class ObtainTokenPairWithColorView(TokenObtainPairView):
-    serializer_class = MyTokenObtainPairSerializer
+# #追加
+# class ObtainTokenPairWithColorView(TokenObtainPairView):
+#     serializer_class = MyTokenObtainPairSerializer
 
 MailSchedulerClass = MailScheduler()
 task_list = TaskList()
