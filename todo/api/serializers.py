@@ -1,6 +1,18 @@
 from rest_framework import serializers
 from todo.models import CustomGroup, Task, CustomUser
 
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer #追加
+
+#トークンを発行するためのクラス
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+
+    @classmethod
+    def get_token(cls, user):
+        token = super(MyTokenObtainPairSerializer, cls).get_token(user)
+
+        # Add custom claims
+        return token
+
 
 class TaskSerializer(serializers.ModelSerializer):
     # user = UserSerializer()

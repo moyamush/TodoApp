@@ -27,11 +27,11 @@ import todo.views as todo
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('mail/', todo.display_mail),
-    # path('accounts/register/', RegistrationView.as_view(form_class=CustomUserForm, success_url="/"),
-    #                                                     name="django-registration_register"),
-    # path('accounts/', include("django_registration.backends.one_step.urls")),
-    # path('accounts/', include("django.contrib.auth.urls")),
+    path('mail/', todo.display_mail),
+    path('accounts/register/', RegistrationView.as_view(form_class=CustomUserForm, success_url="/"),
+                                                        name="django-registration_register"),
+    path('accounts/', include("django_registration.backends.one_step.urls")),
+    path('accounts/', include("django.contrib.auth.urls")),
     # # api画面でユーザーの切り替えができるようになる
     path('api-auth/', include("rest_framework.urls")),
     path('api/rest-auth/', include("rest_auth.urls")),

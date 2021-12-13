@@ -9,6 +9,15 @@ from django.http import Http404
 from .mail import MailScheduler
 from .task_list import TaskList
 
+from .serializers import MyTokenObtainPairSerializer #追加
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+)
+
+#追加
+class ObtainTokenPairWithColorView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
+
 MailSchedulerClass = MailScheduler()
 task_list = TaskList()
 
