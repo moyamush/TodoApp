@@ -42,7 +42,7 @@ ALLOWED_HOSTS = ["sk-todoapp.herokuapp.com"]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
-    'django.contrib.auth',
+    # 'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -50,16 +50,16 @@ INSTALLED_APPS = [
     'django.contrib.sites',
 
     'rest_framework',
-    'rest_framework.authtoken',
+    # 'rest_framework.authtoken',
 
     'djoser', #追加
 
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
 
-    'rest_auth',
-    'rest_auth.registration',
+    # 'rest_auth',
+    # 'rest_auth.registration',
 
     'crispy_forms',
     # vue djangoをつなぐ
@@ -202,13 +202,13 @@ ACCOUNT_EMAIL_REQUIRED = (True)
 
 # permission
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHTICATION_CLASSES': {
-        'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-    },
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-    ],
+    # 'DEFAULT_AUTHTICATION_CLASSES': {
+    #     'rest_framework.authentication.TokenAuthentication',
+    #     'rest_framework.authentication.SessionAuthentication',
+    # },
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest_framework.permissions.IsAuthenticated',
+    # ],
     # 'DEFAULT_AUTHENTICATION_CLASSES': [
     #     #Simple JWTを読み込む
     #     'rest_framework_simplejwt.authentication.JWTAuthentication',
