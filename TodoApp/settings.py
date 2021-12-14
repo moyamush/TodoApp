@@ -34,7 +34,7 @@ if not DEBUG:
     SECRET_KEY = os.environ['SECRET_KEY']
 
 
-ALLOWED_HOSTS = ["moyamush-todoapp.herokuapp.com"]
+ALLOWED_HOSTS = ["sk-todoapp.herokuapp.com"]
 # ALLOWED_HOSTS = ["*"]
 
 
@@ -87,8 +87,8 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'TodoApp.urls'
 
 CORS_ORIGIN_WHITELIST = [
-    'https://moyamush-todoapp-frontend.herokuapp.com',
-    'https://moyamush-todoapp-frontend.herokuapp.com/'
+    'https://sk-todoapp-frontend.herokuapp.com',
+    'https://sk-todoapp-frontend.herokuapp.com/'
 ]
 # レスポンスを公開する
 CORS_ALLOW_CREDENTIALS = True
