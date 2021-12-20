@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 if not DEBUG:
     SECRET_KEY = os.environ['SECRET_KEY']
@@ -81,10 +81,10 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'TodoApp.urls'
 
 CORS_ORIGIN_WHITELIST = [
-#     'https://sk-todoapp-frontend.herokuapp.com',
-#     'https://sk-todoapp-frontend.herokuapp.com/'
+    'https://sk-todoapp-frontend.herokuapp.com',
+    'https://sk-todoapp-frontend.herokuapp.com/'
     'http://127.0.0.1:8080',
-    'http://localhost:8080'
+    'http://localhost:8080',
 ]
 
 # レスポンスを公開する

@@ -62,7 +62,6 @@ class TaskDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 class CurrentUserAPIView(APIView):
     authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = [IsAdminUserOrReadOnly]
-    print("authentication: ", authentication_classes)
     def get_object(self, pk):
         try:
             return CustomUser.objects.get(pk=pk)
@@ -77,11 +76,7 @@ class CurrentUserAPIView(APIView):
             'auth': str(request.auth),  # None
         }
         # print(serializer)
-        print("request.user: ",request.user)
-        print("request.auth: ", request.auth)
-        print("authentication: ", self.authentication_classes)
         return Response(serializer.data)
-        return Response(content)
     
     def put(self, request, format=None):
         user = self.get_object(request.user.id)
