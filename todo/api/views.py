@@ -3,11 +3,14 @@ from todo.models import CustomGroup, Task, CustomUser
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
 from .serializers import GroupSerializer, TaskSerializer, UserSerializer, UserDisplaySerializer
 from todo.api.permissions import IsAdminUserOrReadOnly
 from django.http import Http404
 from .mail import MailScheduler
 from .task_list import TaskList
+from rest_framework import authentication, permissions
 
 # from .serializers import MyTokenObtainPairSerializer #追加
 # from rest_framework_simplejwt.views import (
@@ -22,11 +25,15 @@ MailSchedulerClass = MailScheduler()
 task_list = TaskList()
 
 class GroupViewSet(viewsets.ModelViewSet):
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = [IsAdminUserOrReadOnly]
     queryset = CustomGroup.objects.all()
     serializer_class = GroupSerializer
 
 
 class TaskCreateAPIView(generics.ListCreateAPIView):
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = [IsAdminUserOrReadOnly]
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
 
@@ -38,6 +45,8 @@ class TaskCreateAPIView(generics.ListCreateAPIView):
 
 
 class TaskDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = [IsAdminUserOrReadOnly]
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
 
@@ -51,6 +60,9 @@ class TaskDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class CurrentUserAPIView(APIView):
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = [IsAdminUserOrReadOnly]
+    print("authentication: ", authentication_classes)
     def get_object(self, pk):
         try:
             return CustomUser.objects.get(pk=pk)
@@ -58,10 +70,18 @@ class CurrentUserAPIView(APIView):
             raise Http404
 
     def get(self, request):
-        print("rest-framework-request: ", request)
         serializer = UserDisplaySerializer(request.user)
         self.get_task(request)
+        content = {
+            'user': str(request.user),  # `django.contrib.auth.User` instance.
+            'auth': str(request.auth),  # None
+        }
+        # print(serializer)
+        print("request.user: ",request.user)
+        print("request.auth: ", request.auth)
+        print("authentication: ", self.authentication_classes)
         return Response(serializer.data)
+        return Response(content)
     
     def put(self, request, format=None):
         user = self.get_object(request.user.id)
@@ -86,12 +106,14 @@ class CurrentUserAPIView(APIView):
 class UserCreateAPIView(generics.ListCreateAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
-    # permission_classes = [IsAdminUserOrReadOnly]
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = [IsAdminUserOrReadOnly]
 
 
 class UserDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
-    # permission_classes = [IsAdminUserOrReadOnly]
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = [IsAdminUserOrReadOnly]
 
 

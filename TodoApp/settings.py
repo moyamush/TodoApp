@@ -23,19 +23,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
-try:
-    from config.local_settings import *
-except ImportError:
-    pass
+DEBUG = True
 
 if not DEBUG:
     SECRET_KEY = os.environ['SECRET_KEY']
 
 
-ALLOWED_HOSTS = ["sk-todoapp.herokuapp.com"]
-# ALLOWED_HOSTS = ["*"]
+# ALLOWED_HOSTS = ["sk-todoapp.herokuapp.com"]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -63,7 +58,6 @@ INSTALLED_APPS = [
 
     'crispy_forms',
     # vue djangoをつなぐ
-    'webpack_loader',
     'todo',
 
     'corsheaders',
@@ -87,9 +81,12 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'TodoApp.urls'
 
 CORS_ORIGIN_WHITELIST = [
-    'https://sk-todoapp-frontend.herokuapp.com',
-    'https://sk-todoapp-frontend.herokuapp.com/'
+#     'https://sk-todoapp-frontend.herokuapp.com',
+#     'https://sk-todoapp-frontend.herokuapp.com/'
+    'http://127.0.0.1:8080',
+    'http://localhost:8080'
 ]
+
 # レスポンスを公開する
 CORS_ALLOW_CREDENTIALS = True
 
@@ -179,7 +176,7 @@ LOGOUT_REDIRECT_URL = "/"
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = "uploads"
@@ -202,19 +199,19 @@ ACCOUNT_EMAIL_REQUIRED = (True)
 
 # permission
 REST_FRAMEWORK = {
-    # 'DEFAULT_AUTHTICATION_CLASSES': {
-    #     'rest_framework.authentication.TokenAuthentication',
-    #     'rest_framework.authentication.SessionAuthentication',
-    # },
-    # 'DEFAULT_PERMISSION_CLASSES': [
-    #     'rest_framework.permissions.IsAuthenticated',
-    # ],
+    'DEFAULT_AUTHTICATION_CLASSES': {
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    },
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
     # 'DEFAULT_AUTHENTICATION_CLASSES': [
     #     #Simple JWTを読み込む
     #     'rest_framework_simplejwt.authentication.JWTAuthentication',
     # ],
-    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    # 'PAGE_SIZE': 100,
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 100,
 }
 
 # from datetime import timedelta
@@ -235,12 +232,12 @@ REST_FRAMEWORK = {
 #     'TOKEN_TYPE_CLAIM': 'token_type',
 # }
 
-WEBPACK_LOADER = {
-    'DEFAULT': {
-        'BUNDLE_DIR_NAME' : 'dist/',
-        'STATS_FILE': os.path.join(BASE_DIR, 'frontend', 'webpack-stats.json'),
-    }
-}
+# WEBPACK_LOADER = {
+#     'DEFAULT': {
+#         'BUNDLE_DIR_NAME' : 'dist/',
+#         'STATS_FILE': os.path.join(BASE_DIR, 'frontend', 'webpack-stats.json'),
+#     }
+# }
 
 # メールの送信
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' #設定しなくてもデフォルトでこの値になるっぽい
@@ -256,3 +253,8 @@ if not DEBUG:
     SECRET_KEY = os.environ['SECRET_KEY']
     import django_heroku
     django_heroku.settings(locals())
+
+try:
+    from config.local_settings import *
+except ImportError:
+    pass

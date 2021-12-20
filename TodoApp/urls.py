@@ -19,15 +19,16 @@ from django_registration.backends.one_step.views import RegistrationView
 
 
 from todo.forms import CustomUserForm
-from core.views import IndexTemplateView
+# from core.views import IndexTemplateView
 
 import todo.views as todo
 
+import rest_framework.authtoken.views as auth_views
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('mail/', todo.display_mail),
+    # path('mail/', todo.display_mail),
     path('accounts/register/', RegistrationView.as_view(form_class=CustomUserForm, success_url="/"),
                                                         name="django-registration_register"),
     path('accounts/', include("django_registration.backends.one_step.urls")),
@@ -37,9 +38,9 @@ urlpatterns = [
     path('api/rest-auth/', include("rest_auth.urls")),
     path('api/rest-auth/registraion/', include("rest_auth.registration.urls")),
     path("api/", include("todo.api.urls")),
-    re_path(r"^.*$", IndexTemplateView.as_view(), name="entry-point"),
+    # re_path(r"^.*$", IndexTemplateView.as_view(), name="entry-point"),
     #追加
     #api/authアプリケーションのURLconf読み込み
-    path('api/jwt/auth/', include('djoser.urls.jwt')),
-
+    # path('api/jwt/auth/', include('djoser.urls.jwt')),
+     path('api-token-auth/', auth_views.obtain_auth_token)
 ]
