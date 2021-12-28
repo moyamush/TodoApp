@@ -62,6 +62,7 @@ class TaskDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 class CurrentUserAPIView(APIView):
     authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = [IsAdminUserOrReadOnly]
+    print("CurrentUserAPIView")
     def get_object(self, pk):
         try:
             return CustomUser.objects.get(pk=pk)
@@ -80,6 +81,8 @@ class CurrentUserAPIView(APIView):
     
     def put(self, request, format=None):
         user = self.get_object(request.user.id)
+        print("user: ", user)
+        print("password: ", request.user)
         serializer = UserDisplaySerializer(user, data=request.data)
         if serializer.is_valid():
             serializer.save()

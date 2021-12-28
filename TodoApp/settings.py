@@ -82,9 +82,8 @@ ROOT_URLCONF = 'TodoApp.urls'
 
 CORS_ORIGIN_WHITELIST = [
     'https://sk-todoapp-frontend.herokuapp.com',
-    'https://sk-todoapp-frontend.herokuapp.com/'
-    'http://127.0.0.1:8080',
-    'http://localhost:8080',
+    # 'http://127.0.0.1:8080',
+    # 'http://localhost:8080',
 ]
 
 # レスポンスを公開する
