@@ -8,7 +8,6 @@ router = DefaultRouter()
 # api/todo/
 router.register(r"group", GroupViewSet)
 
-
 urlpatterns = [
     path('', include(router.urls)),
     path("user/", CurrentUserAPIView.as_view(), name="current-user"),

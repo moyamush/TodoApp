@@ -16,7 +16,7 @@ class MailScheduler:
     def mail_create(self, task):
         self.subject = f'タスクの締め切りまで残り1日を切りました。'
         self.message = f"ユーザー名：{task[0]}, タスク名：{task[2]}、グループ名：{task[3]}"
-        self.from_email = 'moyashi0324@gmail.com'
+        self.from_email = ''
         self.to = [task[1]]
         print("email: ", task[1])
         send_mail(self.subject, self.message, self.from_email, self.to)
