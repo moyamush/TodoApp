@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 if not DEBUG:
     SECRET_KEY = os.environ['SECRET_KEY']
@@ -82,8 +82,9 @@ ROOT_URLCONF = 'TodoApp.urls'
 
 CORS_ORIGIN_WHITELIST = [
     'https://sk-todoapp-frontend.herokuapp.com',
-    # 'http://127.0.0.1:8080',
-    # 'http://localhost:8080',
+    'http://127.0.0.1:8080',
+    'http://localhost:8080',
+    'http://172.16.1.81',
 ]
 
 # レスポンスを公開する
@@ -121,12 +122,11 @@ WSGI_APPLICATION = 'TodoApp.wsgi.application'
 import dj_database_url
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'name',
-        'USER': 'user',
-        'PASSWORD': '',
-        'HOST': 'host',
-        'PORT': '',
+        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE' : 'django.db.backends.mysql',
+        'NAME': 'todoapp',
+        'USER': 'root',
+        'PASSWORD': 'Zmoyachan0324-M',
     }
 }
 
