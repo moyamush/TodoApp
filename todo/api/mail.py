@@ -40,7 +40,7 @@ class MailScheduler:
             deadline_before_one_day = self.create_deadline(line[2].split("$")[1]) + datetime.timedelta(days=-1)
             now = datetime.datetime.now()
             mail = []
-            if((now - deadline_before_one_day).seconds <= 60):
+            if((now - deadline_before_one_day).seconds < 60):
                 print("add mail")
                 mail.append(line[4].split("$")[1])
                 mail.append(line[5].split("$")[1])

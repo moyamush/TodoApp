@@ -1,3 +1,4 @@
+from requests import request
 from rest_framework import viewsets, generics, status
 from todo.models import CustomGroup, Task, CustomUser
 from rest_framework.generics import get_object_or_404
@@ -6,7 +7,7 @@ from rest_framework.views import APIView
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 from .serializers import GroupSerializer, TaskSerializer, UserSerializer, UserDisplaySerializer
-from todo.api.permissions import IsAdminUserOrReadOnly
+from todo.api.permissions import IsAdminUserOrReadOnly, IsMyselfToRetrieveUpdateDestroy
 from django.http import Http404
 from .mail import MailScheduler
 from .task_list import TaskList
@@ -26,14 +27,14 @@ task_list = TaskList()
 
 class GroupViewSet(viewsets.ModelViewSet):
     authentication_classes = (authentication.TokenAuthentication,)
-    permission_classes = [IsAdminUserOrReadOnly]
+    permission_classes = [IsMyselfToRetrieveUpdateDestroy]
     queryset = CustomGroup.objects.all()
     serializer_class = GroupSerializer
 
 
 class TaskCreateAPIView(generics.ListCreateAPIView):
     authentication_classes = (authentication.TokenAuthentication,)
-    permission_classes = [IsAdminUserOrReadOnly]
+    permission_classes = [IsMyselfToRetrieveUpdateDestroy]
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
 
@@ -46,7 +47,7 @@ class TaskCreateAPIView(generics.ListCreateAPIView):
 
 class TaskDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = (authentication.TokenAuthentication,)
-    permission_classes = [IsAdminUserOrReadOnly]
+    permission_classes = [IsMyselfToRetrieveUpdateDestroy]
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
 
@@ -59,9 +60,10 @@ class TaskDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
         return self.destroy(request, *args, **kwargs)
 
 
-class CurrentUserAPIView(APIView):
+class CurrentUserAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = CustomUser.objects.all()
     authentication_classes = (authentication.TokenAuthentication,)
-    permission_classes = [IsAdminUserOrReadOnly]
+    permission_classes = [IsMyselfToRetrieveUpdateDestroy]
     def get_object(self, pk):
         try:
             return CustomUser.objects.get(pk=pk)
@@ -71,10 +73,6 @@ class CurrentUserAPIView(APIView):
     def get(self, request):
         serializer = UserDisplaySerializer(request.user)
         self.get_task(request)
-        content = {
-            'user': str(request.user),  # `django.contrib.auth.User` instance.
-            'auth': str(request.auth),  # None
-        }
         # print(serializer)
         return Response(serializer.data)
     
@@ -102,13 +100,36 @@ class UserCreateAPIView(generics.ListCreateAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
     authentication_classes = (authentication.TokenAuthentication,)
-    permission_classes = [IsAdminUserOrReadOnly]
+    permission_classes = [IsMyselfToRetrieveUpdateDestroy]
 
 
 class UserDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
     authentication_classes = (authentication.TokenAuthentication,)
-    permission_classes = [IsAdminUserOrReadOnly]
+    permission_classes = [IsMyselfToRetrieveUpdateDestroy]
+
+    print("queryset: ", queryset)
+
+    # def get_object(self):
+    #     query = self.get_queryset()
+    #     print("query: ", query)
+    #     try:
+    #         print("request: ", request)
+    #         # return CustomUser.objects.get(pk=pk)
+    #     except CustomUser.DoesNotExist:
+    #         raise Http404
+
+    # def get(self, request, pk):
+    #     serializer = UserSerializer(request.user)
+    #     return Response(serializer.data)
+    
+    # def put(self, request, format=None):
+    #     user = self.get_object()
+    #     serializer = UserSerializer(user, data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 

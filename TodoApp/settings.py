@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 if not DEBUG:
     SECRET_KEY = os.environ['SECRET_KEY']
@@ -84,7 +84,6 @@ CORS_ORIGIN_WHITELIST = [
     'https://sk-todoapp-frontend.herokuapp.com',
     'http://127.0.0.1:8080',
     'http://localhost:8080',
-    'http://172.16.1.81',
 ]
 
 # レスポンスを公開する
@@ -120,15 +119,13 @@ WSGI_APPLICATION = 'TodoApp.wsgi.application'
 # }
 
 import dj_database_url
-DATABASES = {
-    'default': {
-        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'ENGINE' : 'django.db.backends.mysql',
-        'NAME': 'todoapp',
-        'USER': 'root',
-        'PASSWORD': 'Zmoyachan0324-M',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'todoapp',
+#         'USER': 'root',
+#     }
+# }
 
 db_from_env = dj_database_url.config(conn_max_age=600, ssl_require=True)
 DATABASES['default'].update(db_from_env)
@@ -205,10 +202,6 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
-    # 'DEFAULT_AUTHENTICATION_CLASSES': [
-    #     #Simple JWTを読み込む
-    #     'rest_framework_simplejwt.authentication.JWTAuthentication',
-    # ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 100,
 }
@@ -231,13 +224,6 @@ REST_FRAMEWORK = {
 #     'TOKEN_TYPE_CLAIM': 'token_type',
 # }
 
-# WEBPACK_LOADER = {
-#     'DEFAULT': {
-#         'BUNDLE_DIR_NAME' : 'dist/',
-#         'STATS_FILE': os.path.join(BASE_DIR, 'frontend', 'webpack-stats.json'),
-#     }
-# }
-
 # メールの送信
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' #設定しなくてもデフォルトでこの値になるっぽい
 EMAIL_HOST = 'smtp.gmail.com'
@@ -255,5 +241,6 @@ if not DEBUG:
 
 try:
     from config.local_settings import *
+    print(123123123)
 except ImportError:
     pass
